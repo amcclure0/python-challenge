@@ -1,5 +1,6 @@
 import os
 import csv
+import sys
 #import pandas as pd
 
 #Import CSV
@@ -47,3 +48,20 @@ print('Total:','$',sum(total_profit_clean))
 print('Average Change:','$',round((total_profit_clean[len(total_profit_clean)-1]-total_profit_clean[0])/(len(total_profit_clean)-1),2))
 print('Greatest Increase in Profits:',total_months[daily_change.index(max(daily_change))+1],'($',max(daily_change),')')
 print('Greatest Decrease in Profits:',total_months[daily_change.index(min(daily_change))+1],'($',min(daily_change),')')
+
+#Specify the file to write to
+output_path = os.path.join('PyBank','Analysis','financial_analysis.csv')
+
+#Initiate sys.stdout to write to csv
+sys.stdout = open(output_path, 'w')
+
+#Write all lines to csv
+print("Financial Analysis")
+print('------------------------')
+print('Total Months:', len(total_months))
+print('Total:','$',sum(total_profit_clean))
+print('Average Change:','$',round((total_profit_clean[len(total_profit_clean)-1]-total_profit_clean[0])/(len(total_profit_clean)-1),2))
+print('Greatest Increase in Profits:',total_months[daily_change.index(max(daily_change))+1],'($',max(daily_change),')')
+print('Greatest Decrease in Profits:',total_months[daily_change.index(min(daily_change))+1],'($',min(daily_change),')')
+
+sys.stdout.close()

@@ -1,6 +1,7 @@
 import os
 import csv
 from collections import Counter
+import sys
 #import pandas as pd
 
 #Import CSV
@@ -43,12 +44,37 @@ with open(csvpath) as election_data:
     max_votes = max(vote_count.values())
     winner= [i for i in vote_count.keys() if vote_count[i]==max_votes]
 
-print(vote_count)
 
 #Print Final Results
 print('Election Results')
 print('-----------------------------')
 print('Total Votes:', total_votes)
 print('-----------------------------')
+print_index = 0
+for i in vote_count:
+    print(list(vote_count.keys())[print_index],':',"{0:.3%}".format(list(vote_count.values())[print_index]/total_votes),'(',list(vote_count.values())[print_index],')')
+    print_index = print_index+1
+print('-----------------------------')
 print('Winner:', winner[0])
 print('-----------------------------')
+
+#Specify the file to write to
+output_path = os.path.join('PyPoll','Analysis','election_results.csv')
+
+#Initiate sys.stdout to write to csv
+sys.stdout = open(output_path, 'w')
+
+#Write all lines to csv
+print('Election Results')
+print('-----------------------------')
+print('Total Votes:', total_votes)
+print('-----------------------------')
+print_index = 0
+for i in vote_count:
+    print(list(vote_count.keys())[print_index],':',"{0:.3%}".format(list(vote_count.values())[print_index]/total_votes),'(',list(vote_count.values())[print_index],')')
+    print_index = print_index+1
+print('-----------------------------')
+print('Winner:', winner[0])
+print('-----------------------------')
+
+sys.stdout.close()
